@@ -13,7 +13,7 @@
           "type": "image/png"
         }
     ],
-    "start_url": "/erppy",
+    "start_url": "/erppymobile",
     "display": "fullscreen",
     "orientation": "landscape"
 }
