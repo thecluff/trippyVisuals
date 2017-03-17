@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Erppy Mobile</title>
+
+        <meta property="title" content="Barry Martin's Hopalong Orbits Visualizer - WebGL Experiment"/>
+        <meta property="description" content="An interactive flight through attractor orbits generated using Barry Martin's Hopalong formula."/>
+
+        <meta property="og:title" content="Barry Martin's Hopalong Orbits Visualizer - WebGL Experiment"/>
+        <meta property="og:image" content="http://iacopoapps.appspot.com/hopalongwebgl/image.jpg"/>
+        <meta property="og:description" content="An interactive flight through attractor orbits generated using Barry Martin's Hopalong formula."/>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="mobile-web-app-capable" content="yes">
+
+        <link rel="manifest" href="manifest.json">
+
+        <link rel="stylesheet" href="css/main.css?v=3"  />
+        <link rel="stylesheet" href="css/font-awesome.min.css"  />
+        <link rel="stylesheet" href="css/bootstrap.min.css" />
+    </head>
+    <body>
+
+    <div id="control_buttons">
+        <div id="menu_button" class="control-button">
+            <i id="menu_button_icon" class="fa fa-bars"></i>
+        </div>
+
+        <div id="mute_button" class="control-button">
+            <i id="mute_button_icon" class="fa fa-volume-off"></i>
+        </div>
+
+        <div id="fullscreen_button" class="control-button">
+            <i id="fullscreen_button_icon" class="fa fa-arrows-alt"></i>
+        </div>
+
+        <div id="about_button" class="control-button menu-button panel-button" data-target="about">
+            <i id="about_button_icon" class="fa fa-info"></i>
+        </div>
+
+        <div id="help_button" class="control-button menu-button panel-button" data-target="info">
+            <i id="help_button_icon" class="fa fa-question"></i>
+        </div>
+
+        <div id="stats_button" class="control-button menu-button">
+            <i id="stats_button_icon" class="fa fa-area-chart"></i>
+        </div>
+    </div>
+
+    <div id="menu_overlay">
+
+        <div id="info" class="menu-panel">
+            <p>Barry Martin's Hopalong Orbits Visualizer - Created using <a href="http://github.com/mrdoob/three.js" target="_blank">three.js</a>
+                <br />Converted for use on mobile devices by Sam Leatherdale
+            </p>
+            <p>[Move mouse/Touch and drag] Camera position
+                <br />[Up-Down] Control speed - [Left-Right] Control rotation
+                <br />[H] Toggle cursor (if on PC)
+            </p>
+            <p>On iOS, add this app to your homescreen to go fullscreen</p>
+        </div>
+
+        <div id="about" class="menu-panel">
+                <b>Barry Martin's Hopalong Orbits Visualizer</b>
+                <p>These orbits are generated iterating this simple algorithm:</p>
+
+                <p>(x, y) -> (y - sign(x)*sqrt(abs(b*x - c)), a -x )</p>
+
+                <p>where a, b, c are random parameters. This is known as the 'Hopalong Attractor'.</p>
+                <p>3D rendering is done using WebGL and <a href="http://github.com/mrdoob/three.js" target="_blank">three.js</a></p>
+                <hr>
+                <p><a href="https://plus.google.com/113975837825449148012?rel=author">About me</a></p>
+                <a href="http://www.chromeexperiments.com/detail/webgl-attractors-trip">Chrome Experiments page</a>
+        </div>
+
+        <div id="chaosnebula">
+        See also <a target="cn" href="https://play.google.com/store/apps/details?id=com.pixmath.chaosnebulagl">ChaosNebulaGL</a> Android live wallpaper</a>
+        </div>
+
+        <form id="control_form">
+            <label for="input_speed">Forward speed: <span id="label_speed">6</span></label>
+            <div class="slider-container">
+                <input type="range" id="input_speed" min="0" max="50" step="1" value="6"data-default="6" />
+            </div>
+            <label for="input_rotation">Rotation speed: <span id="label_rotation">1</span></label>
+            <div class="slider-container">
+                <input type="range" id="input_rotation" min="0" max="0.25" step="0.005" value="0.005" data-default="0.005"  />
+            </div>
+            <div class="form-row">
+                <label id="label_rotation_clockwise" for="rotation_clockwise">Clockwise rotation:</label>
+                <input id="rotation_clockwise" type="checkbox" />
+            </div>
+            <button type="button" class="btn btn-default" id="control_form_reset">Restore Defaults</button>
+        </form>
+    </div>
+
+    <div id="visualizer"></div>
+
+    <div id="player"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+
+    <script src="js/external/Three.js"></script>
+    <script src="js/external/Stats.js"></script>
+    <script src="js/external/Detector.js"></script>
+    <script src="js/external/RequestAnimationFrame.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/video.js"></script>
+
+    </body>
+</html>
