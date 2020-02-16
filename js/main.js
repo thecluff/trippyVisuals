@@ -53,7 +53,7 @@ for (var i = 0; i < NUM_SUBSETS; i++){
       subsetPoints[j] = {
           x: 0,
           y: 0,
-          vertex:  new THREE.Vertex(new THREE.Vector3(0,0,0))
+          vertex: new THREE.Vector3(0,0,0)
       };
   }
   orbit.subsets.push(subsetPoints);
@@ -96,7 +96,7 @@ function init() {
           var geometry = new THREE.Geometry();
           for (var i = 0; i < NUM_POINTS_SUBSET; i++){geometry.vertices.push( orbit.subsets[s][i].vertex);}
           var materials = new THREE.ParticleBasicMaterial( { size: (SPRITE_SIZE ), map: sprite1, blending: THREE.AdditiveBlending, depthTest: false, transparent : true } );
-          materials.color.setHSV(hueValues[s], DEF_SATURATION, DEF_BRIGHTNESS);
+          materials.color = createHSLColor(hueValues[s], DEF_SATURATION, DEF_BRIGHTNESS);
           var particles = new THREE.ParticleSystem( geometry, materials );
           particles.myMaterial = materials;
           particles.myLevel = k;
@@ -148,6 +148,19 @@ function getMouseYOffset() {
   return mouseY - mouseYOffset;
 }
 
+function createHSLColor(hue, saturation, brightness) {
+  // saturation = Math.floor(saturation * 100) + "%";
+  // brightness = Math.floor(brightness * 100) + "%";
+  // var colorString = 'hsl(' + hue + ',' + saturation + ',' + brightness + ')';
+
+  
+  // if (!window.logColor) {
+  //   window.logColor = true;
+  //   console.log(colorString);
+  // }
+  return (new THREE.Color(0,0,0)).setHSL(hue, saturation, brightness);
+}
+
 function render() {
 
   if (camera.position.x >= - CAMERA_BOUND && camera.position.x <= CAMERA_BOUND){
@@ -163,15 +176,15 @@ function render() {
 
   camera.lookAt( scene.position );
 
-  for( i = 0; i < scene.objects.length; i++ ) {
-      scene.objects[i].position.z +=  speed;
-      scene.objects[i].rotation.z += rotationSpeed;
-      if (scene.objects[i].position.z > camera.position.z){
-          scene.objects[i].position.z = - (NUM_LEVELS -1) * LEVEL_DEPTH;
-          if (scene.objects[i].needsUpdate == 1){
-              scene.objects[i].geometry.__dirtyVertices = true;
-              scene.objects[i].myMaterial.color.setHSV( hueValues[scene.objects[i].mySubset], DEF_SATURATION, DEF_BRIGHTNESS);
-              scene.objects[i].needsUpdate = 0;
+  for( i = 0; i < scene.children.length; i++ ) {
+      scene.children[i].position.z +=  speed;
+      scene.children[i].rotation.z += rotationSpeed;
+      if (scene.children[i].position.z > camera.position.z){
+          scene.children[i].position.z = - (NUM_LEVELS -1) * LEVEL_DEPTH;
+          if (scene.children[i].needsUpdate == 1){
+              scene.children[i].geometry.__dirtyVertices = true;
+              scene.children[i].myMaterial.color = createHSLColor(hueValues[scene.children[i].mySubset], DEF_SATURATION, DEF_BRIGHTNESS);
+              scene.children[i].needsUpdate = 0;
           }
       }
   }
@@ -187,8 +200,8 @@ function updateOrbit(){
   for (var s = 0; s < NUM_SUBSETS; s++){
       hueValues[s] = Math.random();
   }
-  for( i = 0; i < scene.objects.length; i++ ) {
-      scene.objects[i].needsUpdate = 1;
+  for( i = 0; i < scene.children.length; i++ ) {
+      scene.children[i].needsUpdate = 1;
   }
 
 }
@@ -256,8 +269,8 @@ function generateOrbit(){
   for (var s = 0; s < NUM_SUBSETS; s++){
       var curSubset = subsets[s];
       for (var i = 0; i < num_points_subset_l; i++){
-          curSubset[i].vertex.position.x = scaleX * (curSubset[i].x - xMin) - scale_factor_l;
-          curSubset[i].vertex.position.y = scaleY * (curSubset[i].y - yMin) - scale_factor_l;
+          curSubset[i].vertex.x = scaleX * (curSubset[i].x - xMin) - scale_factor_l;
+          curSubset[i].vertex.y = scaleY * (curSubset[i].y - yMin) - scale_factor_l;
       }
   }
 }
