@@ -52,6 +52,7 @@ $(function() {
         }
     });
     $("#fullscreen_button").click(toggleFullScreen);
+    $("#center_button").click(recenterCamera);
     $("#menu_button").click(function() {
         var button = $(this);
         var icon = button.find(".fa");

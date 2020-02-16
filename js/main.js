@@ -63,6 +63,7 @@ var container, stats;
 var camera, scene, renderer, composer, hueValues = [];
 
 var mouseX = 0, mouseY = 0;
+var mouseXOffset = 0, mouseYOffset = 0;
 
 var windowHalfX = window.innerWidth / 2;
 var windowHalfY = window.innerHeight / 2;
@@ -137,15 +138,25 @@ function animate() {
   stats.update();
 }
 
+function getMouseXOffset() {
+  if (mouseXOffset) {
+    //debugger;
+  }
+  return mouseX - mouseXOffset;
+}
+function getMouseYOffset() {
+  return mouseY - mouseYOffset;
+}
+
 function render() {
 
   if (camera.position.x >= - CAMERA_BOUND && camera.position.x <= CAMERA_BOUND){
-      camera.position.x += ( mouseX - camera.position.x ) * 0.05;
+      camera.position.x += ( getMouseXOffset() - camera.position.x ) * 0.05;
       if (camera.position.x < - CAMERA_BOUND) camera.position.x = -CAMERA_BOUND;
       if (camera.position.x >  CAMERA_BOUND) camera.position.x = CAMERA_BOUND;
   }
   if (camera.position.y >= - CAMERA_BOUND && camera.position.y <= CAMERA_BOUND){
-      camera.position.y += ( - mouseY - camera.position.y ) * 0.05;
+      camera.position.y += ( - getMouseYOffset() - camera.position.y ) * 0.05;
       if (camera.position.y < - CAMERA_BOUND) camera.position.y = -CAMERA_BOUND;
       if (camera.position.y >  CAMERA_BOUND) camera.position.y = CAMERA_BOUND;
   }
@@ -304,7 +315,29 @@ function onKeyDown(event){
   else if(event.keyCode == 40 && speed > 0) speed -= .5;
   else if(event.keyCode == 37) rotationSpeed += .001;
   else if(event.keyCode == 39) rotationSpeed -= .001;
-  else if(event.keyCode == 72 || event.keyCode == 104) toggleVisuals();
+  else if(event.keyCode == 72 || event.keyCode == 104) toggleVisuals()
+  // W
+  else if (event.keyCode == 87) camera.position.y += 5;
+  // A
+  else if (event.keyCode == 83) camera.position.y -= 5;
+  // S
+  else if (event.keyCode == 65) camera.position.x -= 5;
+  // D
+  else if (event.keyCode == 68) camera.position.x += 5;
+  // Space
+  else if (event.keyCode == 32) {
+    recenterCamera();
+  };
+}
+
+function recenterCamera(e) {
+    camera.position.x = 0;
+    camera.position.y = 0;
+    //mouseXOffset = e.originalEvent.clientX;
+    //mouseYOffset = e.originalEvent.clientY;
+    // "Tare" to current position
+    mouseXOffset = mouseX;
+    mouseYOffset = mouseY;
 }
 
 function toggleVisuals(){
