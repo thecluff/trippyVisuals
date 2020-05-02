@@ -8,7 +8,7 @@ function onYouTubeIframeAPIReady() {
     player = new YT.Player('player', {
         height: '0',
         width: '0',
-        videoId: 'tKi9Z-f6qX4',
+        videoId: 'kNNpZ1-4YW0',
         events: {
             'onReady': function(e) {
                 //e.target.playVideo();
@@ -18,7 +18,7 @@ function onYouTubeIframeAPIReady() {
         playerVars: {
             'autoplay': '0',
             'loop': '1',
-            'playlist': 'tKi9Z-f6qX4',
+            'playlist': 'kNNpZ1-4YW0',
             'start': '3',
             'enablejsapi': '1',
             'rel': '0'
