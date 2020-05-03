@@ -16,7 +16,7 @@ function onYouTubeIframeAPIReady() {
             }
         },
         playerVars: {
-            'autoplay': '0',
+            'autoplay': '1',
             'loop': '1',
             'playlist': 'kNNpZ1-4YW0',
             'start': '3',
